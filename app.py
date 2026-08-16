@@ -1,5 +1,5 @@
-# app.py
-# pip install flask flask-socketio eventlet werkzeug pillow gunicorn
+# messenger_final.py
+# pip install flask flask-socketio eventlet werkzeug pillow
 
 from flask import Flask, request, render_template_string, session, jsonify, send_from_directory
 from flask_socketio import SocketIO, emit, join_room, leave_room
@@ -15,7 +15,7 @@ import re
 import shutil
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-change-this-this-purple-aghabanafshihere-2026')
+app.config['SECRET_KEY'] = 'your-secret-key-change-this-123456789'
 app.config['UPLOAD_FOLDER'] = 'uploads'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024
 app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=365)
@@ -294,7 +294,7 @@ def create_bot(owner_id, bot_name, room_tag):
 online_users = {}
 user_sessions = {}
 
-# ============== HTML ==============
+# ============== ONE HTML ==============
 MAIN_TEMPLATE = '''
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
@@ -305,6 +305,8 @@ MAIN_TEMPLATE = '''
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; background: #0e1621; color: #fff; height: 100vh; overflow: hidden; }
+        
+        /* Auth */
         .auth-container { display: flex; align-items: center; justify-content: center; height: 100vh; }
         .auth-box { max-width: 420px; width: 100%; margin: 20px; background: #17212b; padding: 30px; border-radius: 16px; box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
         .auth-box .logo { text-align: center; margin-bottom: 25px; }
@@ -328,6 +330,8 @@ MAIN_TEMPLATE = '''
         .auth-box .tag-preview { color: #65b9f6; font-size: 13px; margin: 4px 0 8px 0; }
         .auth-box .tag-preview span { background: #242f3d; padding: 2px 10px; border-radius: 4px; }
         .hidden { display: none !important; }
+        
+        /* App */
         .app { display: none; height: 100vh; }
         .sidebar { width: 280px; background: #17212b; border-left: 1px solid #242f3d; display: flex; flex-direction: column; height: 100vh; position: fixed; right: 0; top: 0; z-index: 10; }
         .sidebar-header { padding: 12px; background: #1e2a36; }
@@ -1943,5 +1947,20 @@ def handle_voice_chat(data):
 
 # ============== Run ==============
 if __name__ == '__main__':
-    port = int(os.environ.get('PORT', 5000))
-    socketio.run(app, debug=False, port=port, host='0.0.0.0')
+    print('''
+    ╔═══════════════════════════════════════════════════════════╗
+    ║          پیام‌رسان کامل - همه چیز در یک صفحه             ║
+    ║                                                           ║
+    ║  🌐 http://127.0.0.1:2053                               ║
+    ║  📖 http://127.0.0.1:2053/bot/info                     ║
+    ║                                                           ║
+    ║  ✨ قابلیت‌ها:                                           ║
+    ║  - همه چیز در یک صفحه (بدون ریدایرکت)                   ║
+    ║  - پروفایل پیش‌فرض (user.png یا user.jpg)               ║
+    ║  - ایموجی رندوم در صورت نبود عکس                        ║
+    ║  - بدون لاگین هیچ پیامی ارسال نمیشه                     ║
+    ║  - Session دائمی (یکبار ورود برای همیشه)                 ║
+    ║  - گروه، کانال، چت صوتی، بات و همه چیز                 ║
+    ╚═══════════════════════════════════════════════════════════╝
+    ''')
+    socketio.run(app, debug=True, port=2053, host='0.0.0.0')
